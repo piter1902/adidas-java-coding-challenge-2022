@@ -1,6 +1,6 @@
 package com.adidas.backend.prioritysaleservice.entities;
 
-import com.adidas.backend.prioritysaleservice.service.AdiClub.dto.AdiClubMemberInfoDto;
+import com.adidas.backend.prioritysaleservice.service.adiClub.dto.AdiClubMemberInfoDto;
 
 import java.util.Comparator;
 

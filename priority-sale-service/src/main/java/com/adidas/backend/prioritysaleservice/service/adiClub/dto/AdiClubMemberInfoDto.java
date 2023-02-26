@@ -1,4 +1,4 @@
-package com.adidas.backend.prioritysaleservice.service.AdiClub.dto;
+package com.adidas.backend.prioritysaleservice.service.adiClub.dto;
 
 import java.time.Instant;
 

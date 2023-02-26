@@ -8,7 +8,7 @@ import java.time.Instant;
 @Data
 @Builder
 public class AdiClubMemberInfoDto {
-  private String email;
-  private Integer points;
-  private Instant registrationDate;
+    private String email;
+    private Integer points;
+    private Instant registrationDate;
 }

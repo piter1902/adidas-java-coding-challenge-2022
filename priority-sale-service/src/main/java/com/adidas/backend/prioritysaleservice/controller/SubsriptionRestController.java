@@ -1,8 +1,8 @@
 package com.adidas.backend.prioritysaleservice.controller;
 
-import com.adidas.backend.prioritysaleservice.entities.PrioritaryQueue;
-import com.adidas.backend.prioritysaleservice.service.AdiClub.AdiClubService;
-import com.adidas.backend.prioritysaleservice.service.AdiClub.dto.AdiClubMemberInfoDto;
+import com.adidas.backend.prioritysaleservice.service.adiClub.AdiClubService;
+import com.adidas.backend.prioritysaleservice.service.adiClub.dto.AdiClubMemberInfoDto;
+import com.adidas.backend.prioritysaleservice.service.prioritaryQueue.PrioritaryQueueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,8 @@ public class SubsriptionRestController {
     @Autowired
     private AdiClubService adiClubService;
 
-    private static PrioritaryQueue queue = new PrioritaryQueue();
+    @Autowired
+    private PrioritaryQueueService prioritaryQueueService;
 
     @RequestMapping(method = RequestMethod.POST, value = "subscribe")
     public ResponseEntity<?> subscribeToPriorityList(@RequestParam(value = "emailAddress") String email) {
@@ -28,11 +29,11 @@ public class SubsriptionRestController {
 
         AdiClubMemberInfoDto memberInfo = this.adiClubService.getMemberInformationForEmail(email);
 
-        log.debug("Member info: " +memberInfo.points + " (points); " + memberInfo.registrationDate + " (subscription date)");
+        log.debug("Member info: " + memberInfo.points + " (points); " + memberInfo.registrationDate + " (subscription date)");
 
-        queue.addUserToQueue(memberInfo);
+        prioritaryQueueService.addUserToQueue(memberInfo);
 
-        log.debug("LIST: \n" + queue.getQueue() + "---------");
+        log.debug("LIST: \n" + prioritaryQueueService.getQueue() + "---------");
 
         return ResponseEntity.ok().build();
     }

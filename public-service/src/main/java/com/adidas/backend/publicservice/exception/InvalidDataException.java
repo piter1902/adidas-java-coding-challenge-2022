@@ -1,6 +1,5 @@
 package com.adidas.backend.publicservice.exception;
 
-import org.springframework.cloud.commons.security.AccessTokenContextRelay;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

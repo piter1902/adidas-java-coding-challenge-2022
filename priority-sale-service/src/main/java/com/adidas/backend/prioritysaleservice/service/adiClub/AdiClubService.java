@@ -1,6 +1,6 @@
-package com.adidas.backend.prioritysaleservice.service.AdiClub;
+package com.adidas.backend.prioritysaleservice.service.adiClub;
 
-import com.adidas.backend.prioritysaleservice.service.AdiClub.dto.AdiClubMemberInfoDto;
+import com.adidas.backend.prioritysaleservice.service.adiClub.dto.AdiClubMemberInfoDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

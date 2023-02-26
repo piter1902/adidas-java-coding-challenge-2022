@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/subsription")
+@RequestMapping(value = "/subscription")
 public class SubscriptionRestController {
 
     @Autowired

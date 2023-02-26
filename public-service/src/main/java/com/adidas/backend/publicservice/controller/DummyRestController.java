@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/dummy")
 public class DummyRestController {
 
-  private static final String DUMMY_RESPONSE = "Hello, this is a dummy response from public service";
+    private static final String DUMMY_RESPONSE = "Hello, this is a dummy response from public service";
 
-  @GetMapping
-  public ResponseEntity<String> getDummyEndpointResponse() {
-    return ResponseEntity
-        .ok()
-        .body(DUMMY_RESPONSE);
-  }
+    @GetMapping
+    public ResponseEntity<String> getDummyEndpointResponse() {
+        return ResponseEntity
+                .ok()
+                .body(DUMMY_RESPONSE);
+    }
 
 }
