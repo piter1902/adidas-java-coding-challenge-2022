@@ -19,6 +19,11 @@ public class SubscriptionRestController {
     @Autowired
     private SubscriptionService subscriptionService;
 
+    /**
+     * Subscribes user to prioritary access list
+     * @param subscribe user information
+     * @return OK if user is subscribed to prioritary access list
+     */
     @RequestMapping(method = RequestMethod.POST, value = "subscribe")
     public ResponseEntity<?> subscribeToPrioritaryList(@Valid @NotNull @RequestBody SubscribeDto subscribe) {
         subscriptionService.subscribeToPrioritaryList(subscribe);

@@ -19,6 +19,11 @@ public class EmailRestController {
     @Autowired
     private EmailService emailService;
 
+    /**
+     * Send access email to user
+     * @param sendMailDto user information
+     * @return OK if email was sent successfully
+     */
     @RequestMapping(method = RequestMethod.POST, value = "send")
     public ResponseEntity<?> sendEmail(@Valid @NotNull @RequestBody SendMailDto sendMailDto) {
         this.emailService.sendEmail(sendMailDto);
