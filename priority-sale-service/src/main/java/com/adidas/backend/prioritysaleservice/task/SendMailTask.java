@@ -1,9 +1,10 @@
 package com.adidas.backend.prioritysaleservice.task;
 
-import com.adidas.backend.prioritysaleservice.exception.CanNotUnqueueUserException;
-import com.adidas.backend.prioritysaleservice.service.adiClub.dto.AdiClubMemberInfoDto;
+import com.adidas.backend.prioritysaleservice.exception.CanNotDequeueUserException;
+import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberInfoDto;
 import com.adidas.backend.prioritysaleservice.service.email.EmailService;
-import com.adidas.backend.prioritysaleservice.service.prioritaryQueue.PrioritaryQueueService;
+import com.adidas.backend.prioritysaleservice.service.email.dto.SendMailDto;
+import com.adidas.backend.prioritysaleservice.service.prioritaryqueue.PrioritaryQueueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,10 +23,16 @@ public class SendMailTask {
     @Scheduled(cron = "${task.sendmail.cron}")
     public void sendMailToFirstUserInList() {
         try {
-            AdiClubMemberInfoDto member = prioritaryQueueService.unqueueFirst();
-            log.debug("First user is: " + member.email + "\n----------\n");
-            emailService.sendEmail(member.email);
-        } catch (CanNotUnqueueUserException e) {
+            AdiClubMemberInfoDto member = prioritaryQueueService.dequeueFirst();
+            log.debug("Dequeued user is: " + member.getEmail() + "\n----------\n");
+
+            SendMailDto sendMailDto = SendMailDto
+                    .builder()
+                    .email(member.getEmail())
+                    .build();
+
+            emailService.sendEmail(sendMailDto);
+        } catch (CanNotDequeueUserException e) {
             log.debug("There are no users in queue");
         }
     }

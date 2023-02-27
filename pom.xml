@@ -32,6 +32,7 @@
         <spring.boot.starter.version>2.7.1</spring.boot.starter.version>
         <lombok.version>1.18.24</lombok.version>
         <springdoc-openapi-ui.version>1.6.9</springdoc-openapi-ui.version>
+        <mockitoversion>3.12.4</mockitoversion>
     </properties>
 
     <dependencyManagement>
@@ -62,14 +63,38 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- Spring Starter Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!-- Spring Starter Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Validations -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!-- Mockito -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockitoversion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockitoversion}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

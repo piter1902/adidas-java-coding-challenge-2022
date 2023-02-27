@@ -1,7 +1,7 @@
-package com.adidas.backend.publicservice.dto;
+package com.adidas.backend.prioritysaleservice.service.email.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,9 +9,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class SubscribeDto {
+@Builder
+public class SendMailDto {
+
     @Email
     @NotNull
     String email;

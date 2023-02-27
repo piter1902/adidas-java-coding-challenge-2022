@@ -1,4 +1,4 @@
-package com.adidas.backend.publicservice;
+package com.adidas.backend.publicservice.controller;
 
 import com.adidas.backend.publicservice.controller.DummyRestController;
 import org.junit.jupiter.api.Assertions;

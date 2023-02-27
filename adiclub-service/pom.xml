@@ -11,13 +11,4 @@
     <version>0.0.1</version>
     <name>adiclub-service</name>
     <description>adiClub Service</description>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
-
 </project>
