@@ -1,6 +1,7 @@
 package com.adidas.backend.prioritysaleservice.controller;
 
 import com.adidas.backend.prioritysaleservice.dto.SubscribeDto;
+import com.adidas.backend.prioritysaleservice.exception.CanNotQueueUserException;
 import com.adidas.backend.prioritysaleservice.service.subscription.SubscriptionService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +26,7 @@ public class SubscriptionRestControllerTests {
     private SubscriptionRestController subscriptionRestController;
 
     @Test
-    public void subscribeToPrioritaryList_shouldReturnOkResponse() {
+    public void subscribeToPrioritaryList_shouldReturnOkResponse() throws CanNotQueueUserException {
         // arrange
         String email = "example@domain.com";
 
@@ -39,7 +40,7 @@ public class SubscriptionRestControllerTests {
     }
 
     @Test
-    public void subscribeToPrioritaryList_shouldCallSubscriptionServiceSubscribeToPrioritaryListWithProperEmail() {
+    public void subscribeToPrioritaryList_shouldCallSubscriptionServiceSubscribeToPrioritaryListWithProperEmail() throws CanNotQueueUserException {
         // arrange
         String email = "example@domain.com";
 

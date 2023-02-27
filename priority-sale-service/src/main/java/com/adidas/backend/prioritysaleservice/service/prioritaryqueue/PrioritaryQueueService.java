@@ -1,7 +1,8 @@
 package com.adidas.backend.prioritysaleservice.service.prioritaryqueue;
 
-import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberComparator;
 import com.adidas.backend.prioritysaleservice.exception.CanNotDequeueUserException;
+import com.adidas.backend.prioritysaleservice.exception.CanNotQueueUserException;
+import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberComparator;
 import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberInfoDto;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -33,7 +35,15 @@ public class PrioritaryQueueService {
         return member;
     }
 
-    public void addUserToQueue(AdiClubMemberInfoDto user) {
+    public void addUserToQueue(AdiClubMemberInfoDto user) throws CanNotQueueUserException {
+        Optional<AdiClubMemberInfoDto> memberInList = queue.stream()
+                .filter(member -> member.getEmail().equals(user.getEmail()))
+                .findFirst();
+
+        if (memberInList.isPresent()) {
+            throw new CanNotQueueUserException("User is already in queue");
+        }
+
         queue.add(user);
         sortList();
     }

@@ -1,6 +1,7 @@
 package com.adidas.backend.prioritysaleservice.controller;
 
 import com.adidas.backend.prioritysaleservice.dto.SubscribeDto;
+import com.adidas.backend.prioritysaleservice.exception.CanNotQueueUserException;
 import com.adidas.backend.prioritysaleservice.service.subscription.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class SubscriptionRestController {
      * @return OK if user is subscribed to prioritary access list
      */
     @RequestMapping(method = RequestMethod.POST, value = "subscribe")
-    public ResponseEntity<?> subscribeToPrioritaryList(@Valid @NotNull @RequestBody SubscribeDto subscribe) {
+    public ResponseEntity<?> subscribeToPrioritaryList(@Valid @NotNull @RequestBody SubscribeDto subscribe) throws CanNotQueueUserException {
         subscriptionService.subscribeToPrioritaryList(subscribe);
         return ResponseEntity.ok().build();
     }

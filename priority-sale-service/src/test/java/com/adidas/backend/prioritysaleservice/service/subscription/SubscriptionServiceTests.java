@@ -1,6 +1,7 @@
 package com.adidas.backend.prioritysaleservice.service.subscription;
 
 import com.adidas.backend.prioritysaleservice.dto.SubscribeDto;
+import com.adidas.backend.prioritysaleservice.exception.CanNotQueueUserException;
 import com.adidas.backend.prioritysaleservice.service.adiclub.AdiClubService;
 import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberInfoDto;
 import com.adidas.backend.prioritysaleservice.service.prioritaryqueue.PrioritaryQueueService;
@@ -28,7 +29,7 @@ public class SubscriptionServiceTests {
     private SubscriptionService subscriptionService;
 
     @Test
-    public void subscribeToPrioritaryList_shouldCallPrioritaryQueueServiceAddUserToQueueWithProperEmail() {
+    public void subscribeToPrioritaryList_shouldCallPrioritaryQueueServiceAddUserToQueueWithProperEmail() throws CanNotQueueUserException {
         // arrange
         String email = "example@domain.com";
         SubscribeDto subscribeDto = new SubscribeDto(email);

@@ -30,7 +30,8 @@ public class SubscriptionRestController {
     @Operation(operationId = "subscribeToPrioritaryList", description = "Subscribes user to prioritary access list")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User subscribed to prioritary access list"),
-            @ApiResponse(responseCode = "400", description = "Validation error in input data")
+            @ApiResponse(responseCode = "400", description = "Validation error in input data"),
+            @ApiResponse(responseCode = "409", description = "Conflict when adding user to prioritary access list")
     })
     @RequestMapping(method = RequestMethod.POST, value = "subscribe")
     public ResponseEntity<?> subscribeToPrioritaryList(@Valid @RequestBody SubscribeDto subscribe) {
