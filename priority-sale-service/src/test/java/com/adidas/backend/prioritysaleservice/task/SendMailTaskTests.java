@@ -1,7 +1,7 @@
 package com.adidas.backend.prioritysaleservice.task;
 
 import com.adidas.backend.prioritysaleservice.exception.CanNotDequeueUserException;
-import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberInfoDto;
+import com.adidas.backend.prioritysaleservice.entity.MemberInformation;
 import com.adidas.backend.prioritysaleservice.service.email.EmailService;
 import com.adidas.backend.prioritysaleservice.service.email.dto.SendMailDto;
 import com.adidas.backend.prioritysaleservice.service.prioritaryqueue.PrioritaryQueueService;
@@ -31,7 +31,11 @@ public class SendMailTaskTests {
     public void sendMailToFirstUserInList_shouldCallEmailServiceSendMailWithProperUserIfQueueIsNotEmpty() throws CanNotDequeueUserException {
         // arrange
         String email = "example@domain.com";
-        AdiClubMemberInfoDto firstMember = new AdiClubMemberInfoDto(email, 0, Instant.now());
+        MemberInformation firstMember = MemberInformation.builder()
+                                        .email(email)
+                                        .points(0)
+                                        .registrationDate(Instant.now())
+                                        .build();
 
         when(prioritaryQueueServiceMock.dequeueFirst()).thenReturn(firstMember);
 

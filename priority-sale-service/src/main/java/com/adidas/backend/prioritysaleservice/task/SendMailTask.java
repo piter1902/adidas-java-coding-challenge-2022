@@ -1,7 +1,7 @@
 package com.adidas.backend.prioritysaleservice.task;
 
 import com.adidas.backend.prioritysaleservice.exception.CanNotDequeueUserException;
-import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberInfoDto;
+import com.adidas.backend.prioritysaleservice.entity.MemberInformation;
 import com.adidas.backend.prioritysaleservice.service.email.EmailService;
 import com.adidas.backend.prioritysaleservice.service.email.dto.SendMailDto;
 import com.adidas.backend.prioritysaleservice.service.prioritaryqueue.PrioritaryQueueService;
@@ -23,7 +23,7 @@ public class SendMailTask {
     @Scheduled(cron = "${task.sendmail.cron}")
     public void sendMailToFirstUserInList() {
         try {
-            AdiClubMemberInfoDto member = prioritaryQueueService.dequeueFirst();
+            MemberInformation member = prioritaryQueueService.dequeueFirst();
             log.debug("Dequeued user is: " + member.getEmail() + "\n----------\n");
 
             SendMailDto sendMailDto = SendMailDto

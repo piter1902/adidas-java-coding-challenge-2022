@@ -1,56 +1,56 @@
 package com.adidas.backend.prioritysaleservice.service.prioritaryqueue;
 
+import com.adidas.backend.prioritysaleservice.entity.MemberInformation;
 import com.adidas.backend.prioritysaleservice.exception.CanNotDequeueUserException;
 import com.adidas.backend.prioritysaleservice.exception.CanNotQueueUserException;
-import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberComparator;
+import com.adidas.backend.prioritysaleservice.repository.MemberInformationRepository;
 import com.adidas.backend.prioritysaleservice.service.adiclub.dto.AdiClubMemberInfoDto;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class PrioritaryQueueService {
-    final static int FIRST_ELEMENT_INDEX = 0;
+    @Autowired
+    private MemberInformationRepository memberInformationRepository;
 
-    private List<AdiClubMemberInfoDto> queue;
+    public MemberInformation dequeueFirst() throws CanNotDequeueUserException {
 
-    public PrioritaryQueueService() {
-        this.queue = Collections.synchronizedList(new ArrayList<>());
-    }
+        Optional<MemberInformation> userInQueue = this.memberInformationRepository.findFirstUserInQueue();
 
-    public AdiClubMemberInfoDto dequeueFirst() throws CanNotDequeueUserException {
-        if (queue.isEmpty()) {
+        if (userInQueue.isEmpty()) {
             throw new CanNotDequeueUserException("Can not dequeue user of an empty list");
         }
 
-        AdiClubMemberInfoDto member = queue.get(FIRST_ELEMENT_INDEX);
-        queue.remove(FIRST_ELEMENT_INDEX);
+        MemberInformation member = userInQueue.get();
+
+        this.memberInformationRepository.delete(member);
 
         return member;
     }
 
     public void addUserToQueue(AdiClubMemberInfoDto user) throws CanNotQueueUserException {
-        Optional<AdiClubMemberInfoDto> memberInList = queue.stream()
-                .filter(member -> member.getEmail().equals(user.getEmail()))
-                .findFirst();
+        Optional<MemberInformation> memberInList = this.memberInformationRepository.findByEmail(user.getEmail());
 
         if (memberInList.isPresent()) {
             throw new CanNotQueueUserException("User is already in queue");
         }
 
-        queue.add(user);
-        sortList();
+        MemberInformation member = user.toMemberInformation();
+        this.memberInformationRepository.save(member);
     }
 
     public String getQueue() {
         StringBuilder builder = new StringBuilder();
-        this.queue.forEach(member ->
+
+        Sort sortCriteria = Sort.by(Sort.Direction.DESC, "points", "registrationDate");
+
+        List<MemberInformation> queue = this.memberInformationRepository.findAll(sortCriteria);
+
+        queue.forEach(member ->
                 builder
                         .append(member.getEmail())
                         .append(" : ")
@@ -59,12 +59,5 @@ public class PrioritaryQueueService {
                         .append(member.getRegistrationDate())
                         .append("\n"));
         return builder.toString();
-    }
-
-
-    // Private Method for sorting queue
-    private void sortList() {
-        // Sort Criteria: points then registration date
-        this.queue.sort(new AdiClubMemberComparator());
     }
 }

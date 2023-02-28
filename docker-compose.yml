@@ -35,3 +35,9 @@ services:
     build:
       context: email-service
       dockerfile: Dockerfile
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
